@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useFilterStore } from '../store/useFilterStore';
+import { Link } from 'react-router-dom';
 
 const fetchProducts = async ({ queryKey }) => {
   const [_key, { title, categoryId, price }] = queryKey;
@@ -106,7 +107,8 @@ export const Catalog = () => {
               <h3>По вашему запросу ничего не найдено.</h3>
             ) : (
               products?.map((product) => (
-                <div
+                <Link
+                  to={`/advanced-catalog/${product.id}`}
                   key={product.id}
                   style={{
                     display: 'flex',
@@ -142,7 +144,7 @@ export const Catalog = () => {
                     Категория: {product.category.name}
                   </p>
                   <strong style={{ fontSize: '18px' }}>${product.price}</strong>
-                </div>
+                </Link>
               ))
             )}
           </div>

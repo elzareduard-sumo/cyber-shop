@@ -7,6 +7,7 @@ import { Cart } from '../pages/Cart.jsx';
 import { News, newsLoader } from '../pages/News.jsx';
 import { NewsDetail, newsDetailLoader } from '../pages/NewsDetail.jsx';
 import { Catalog } from '../pages/Catalog.jsx';
+import { ProductDetail } from '../pages/ProductDetail.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: 'advanced-catalog',
         element: <Catalog />,
+      },
+      {
+        path: 'advanced-catalog/:id',
+        element: <ProductDetail />,
       },
       {
         index: true,

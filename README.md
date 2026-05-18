@@ -1,16 +1,34 @@
-# React + Vite
+# Cyber-Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект интернет-магазина, разработанный на стеке **React + Vite**. 
 
-Currently, two official plugins are available:
+В ходе работы над проектом был проведен рефакторинг: изначальная монолитная структура (где все компоненты, запросы и состояния лежали в одной куче) была переведена на чистую, масштабируемую **слоистую архитектуру**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🏗 Архитектура проекта (Разделение по слоям)
 
-## React Compiler
+Теперь проект разделен на логические слои. Это позволило отделить бизнес-логику от UI и сделать код легко читаемым:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **`src/api/`** — Слой работы с сетью. Здесь инкапсулирована настройка Axios и функции для обращения к внешним API (dummyjson, escuelajs).
+* **`src/pages/`** — Слой страниц. Умные компоненты, которые отвечают за компоновку страницы и вызов хуков данных.
+* **`src/components/`** — Слой переиспользуемого UI (глупые компоненты). Например, общий `Layout` с навигацией.
+* **`src/store/`** — Слой клиентского состояния. Содержит хранилища Zustand (например, глобальные фильтры).
+* **`src/router/`** — Слой маршрутизации. Выделенная конфигурация путей на базе `createBrowserRouter`.
 
-## Expanding the ESLint configuration
+## 🛠 Стек технологий и работа с данными
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+В проекте строго разделены понятия **клиентского** и **серверного** состояния:
+
+1. **TanStack Query (React Query)** — отвечает за асинхронные запросы (серверное состояние).
+   * Реализовано получение списка товаров и детальной страницы одного товара.
+   * Настроено **кэширование** (`staleTime: 60 * 1000`). Повторные заходы на страницу не вызывают лишних сетевых запросов.
+   * Встроена автоматическая обработка состояний `isLoading` и `isError`.
+2. **Zustand** — отвечает за локальное UI-состояние.
+   * Реализовано глобальное хранилище для фильтров (поиск по названию, категории, цене).
+   * Подключен `persist` middleware: выбранные фильтры сохраняются в `localStorage` и не сбрасываются при перезагрузке страницы.
+3. **React Router DOM** — маршрутизация, включая передачу параметров в URL (`/advanced-catalog/:id`).
+
+## 📈 Что стало лучше после рефакторинга?
+
+1. **Читаемость:** Компоненты страниц больше не перегружены логикой `fetch` и `useEffect`. Они просто вызывают `useQuery` или `useFilterStore` и занимаются отрисовкой (UI).
+2. **Производительность:** За счет TanStack Query данные кэшируются, интерфейс работает мгновенно. 
+3. **Масштабируемость:** Добавление новых сущностей (например, корзины или профиля) не сломает текущий код, так как для них просто создадутся свои модули в папках `api` и `store`.
