@@ -8,6 +8,7 @@ export const Layout = () => {
         <nav style={{ display: 'flex', gap: '20px' }}>
           <NavLink to="/news" style={({ isActive }) => ({ color: isActive ? '#00ffcc' : '#fff', textDecoration: 'none', fontWeight: 'bold' })}>Новости</NavLink>
           <NavLink to="/" style={({ isActive }) => ({ color: isActive ? '#00ffcc' : '#fff', textDecoration: 'none', fontWeight: 'bold' })}>Главная</NavLink>
+          <NavLink to="/advanced-catalog" style={({ isActive }) => ({ color: isActive ? '#00ffcc' : '#fff', textDecoration: 'none', fontWeight: 'bold' })}>Продвинутый Каталог</NavLink>
           <NavLink to="/products" style={({ isActive }) => ({ color: isActive ? '#00ffcc' : '#fff', textDecoration: 'none', fontWeight: 'bold' })}>Каталог</NavLink>
           <NavLink to="/cart" style={({ isActive }) => ({ color: isActive ? '#00ffcc' : '#fff', textDecoration: 'none', fontWeight: 'bold' })}>Корзина</NavLink>
         </nav>

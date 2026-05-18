@@ -6,6 +6,7 @@ import { Products, productsLoader } from '../pages/Products.jsx';
 import { Cart } from '../pages/Cart.jsx';
 import { News, newsLoader } from '../pages/News.jsx';
 import { NewsDetail, newsDetailLoader } from '../pages/NewsDetail.jsx';
+import { Catalog } from '../pages/Catalog.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: 'advanced-catalog',
+        element: <Catalog />,
+      },
       {
         index: true,
         element: <Home />,
