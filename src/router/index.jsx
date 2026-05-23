@@ -8,6 +8,9 @@ import { News, newsLoader } from '../pages/News.jsx';
 import { NewsDetail, newsDetailLoader } from '../pages/NewsDetail.jsx';
 import { Catalog } from '../pages/Catalog.jsx';
 import { ProductDetail } from '../pages/ProductDetail.jsx';
+import { Login } from '../pages/Login.jsx';
+import { Profile } from '../pages/Profile.jsx';
+import { PrivateRoute } from '../components/PrivateRoute.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +48,16 @@ export const router = createBrowserRouter([
         path: 'news/:id',
         element: <NewsDetail />,
         loader: newsDetailLoader,
+      },
+      { path: 'login', element: <Login /> },
+      {
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: 'profile',
+            element: <Profile />,
+          },
+        ],
       },
     ],
   },
